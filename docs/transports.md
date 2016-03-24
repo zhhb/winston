@@ -27,6 +27,7 @@ There are several [core transports](#winston-core) included in `winston`, which 
   * [Airbrake](#airbrake-transport)
   * [Newrelic](#newrelic-transport) (errors only)
   * [Logsene](#logsene-transport) (including Log-Alerts and Anomaly Detection)
+  * [Logz.io](#logzio-transport)
 
 ## Winston Core
 
@@ -82,7 +83,7 @@ The File transport should really be the 'Stream' transport since it will accept 
 * __logstash:__ If true, messages will be logged as JSON and formatted for logstash (default false).
 * __showLevel:__ Boolean flag indicating if we should prepend output with level (default true).
 * __formatter:__ If function is specified and `json` is set to `false`, its return value will be used instead of default output. (default undefined)
-* __tailable:__ If true, log files will be rolled based on maxsize and maxfiles, but in ascending order. The __filename__ will always have the most recent log lines. The larger the appended number, the older the log file.
+* __tailable:__ If true, log files will be rolled based on maxsize and maxfiles, but in ascending order. The __filename__ will always have the most recent log lines. The larger the appended number, the older the log file.  This option requires __maxFiles__ to be set, or it will be ignored.
 * __maxRetries:__ The number of stream creation retry attempts before entering a failed state. In a failed state the transport stays active but performs a NOOP on it's log function. (default 2)
 * __zippedArchive:__ If true, all log files but the current one will be zipped.
 * __options:__ options passed to `fs.createWriteStream` (default `{flags: 'a'}`).
@@ -167,6 +168,27 @@ The Loggly transport is based on [Nodejitsu's][6] [node-loggly][7] implementatio
 * __json:__ If true, messages will be sent to Loggly as JSON.
 
 *Metadata:* Logged in suggested [Loggly format][10]
+
+
+### Logzio Transport
+
+You can download the logzio transport here : [https://github.com/logzio/winston-logzio](https://github.com/logzio/winston-logzio)  
+
+*Basic Usage*  
+```js
+var winston = require('winston');
+var logzioWinstonTransport = require('winston-logzio');
+
+var loggerOptions = {
+    apiToken: '__YOUR_API_TOKEN__'
+};
+winston.add(logzioWinstonTransport, loggerOptions);
+
+winston.log('info', 'winston logger configured with logzio transport');
+```
+
+For more information about how to configure the logzio transport, view the README.md in the [winston-logzio repo](https://github.com/logzio/winston-logzio).
+
 
 ### Riak Transport
 
@@ -345,7 +367,7 @@ Also supports callbacks for completion when the DynamoDB putItem has been compel
 
 ### Papertrail Transport
 
-[winston-papertrail][23] is a Papertrail transport:
+[winston-papertrail][27] is a Papertrail transport:
 
 ``` js
   var Papertrail = require('winston-papertrail').Papertrail;
@@ -561,3 +583,4 @@ Options:
 [24]: https://github.com/sematext/winston-logsene
 [25]: https://github.com/timdp/winston-aws-cloudwatch
 [26]: https://github.com/lazywithclass/winston-cloudwatch
+[27]: https://github.com/kenperkins/winston-papertrail
